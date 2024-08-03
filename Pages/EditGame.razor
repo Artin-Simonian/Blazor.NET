@@ -1,5 +1,7 @@
 ﻿@page "/game";
 @using GameStore.Client.Models
+@inject NavigationManager NavigationManager
+
 
 <PageTitle>Edit Game</PageTitle>
 <h1>Game Catalog</h1>
@@ -7,7 +9,7 @@
 
 <div class="row">
     <div class="col-sm-4">
-        <EditForm Model="@game">
+        <EditForm Model="@game" OnSubmit="HandleSubmit">
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <InputText id="name" @bind-Value="game.Name" class="form-control"></InputText>
@@ -24,6 +26,7 @@
                 <label for="releasedate" class="form-label">Release Date:</label>
                 <InputDate id="releasedate" @bind-Value="game.ReleaseDate" class="form-control"></InputDate>
             </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </EditForm>
     </div>
 </div>
@@ -34,4 +37,10 @@
         Genre = string.Empty,
         ReleaseDate = DateTime.UtcNow
     };
+
+    public void HandleSubmit()
+    {
+        GameClient.AddGame(game);
+    }
+
 }
